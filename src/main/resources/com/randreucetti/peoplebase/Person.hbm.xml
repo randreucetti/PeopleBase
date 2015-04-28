@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.randreucetti.peoplebase.model.Person" table="PEOPLE">
+		<id name="id" column="PERSON_ID" type="long">
+            <generator class="native" />
+        </id>
+		<property name="firstName" column="FIRSTNAME" type="string" length="30" not-null="true" />
+		<property name="surname" column="SURNAME" type="string" length="30" not-null="true" />
+		<property name="phone" column="PHONE" type="string" length="30" />
+		<property name="email" column="EMAIL" type="string" length="30" />
+		<property name="country" column="COUNTRY" type="string" length="30" />
+		<property name="gender" column="GENDER" type="char" />
+		<property name="dateOfBirth" column="DATEOFBIRTH" type="date" not-null="true" />
+		<property name="creationTime" column="CREATIONTIME" type="date" not-null="true" />
+	</class>
+</hibernate-mapping>
