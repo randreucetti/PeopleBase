@@ -35,7 +35,7 @@ public class PersonDaoImplTest {
 		assertTrue(rowCount == personDao.count());
 	}
 
-	@Test(expected=PropertyValueException.class)
+	@Test(expected = PropertyValueException.class)
 	public void testNullField() {
 		PersonDao personDao = new PersonDaoImpl();
 		Person p = new Person();
