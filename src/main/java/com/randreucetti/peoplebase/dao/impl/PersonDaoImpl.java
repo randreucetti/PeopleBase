@@ -1,5 +1,7 @@
 package com.randreucetti.peoplebase.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
@@ -38,6 +40,13 @@ public class PersonDaoImpl implements PersonDao {
 		Criteria criteria = session.createCriteria(Person.class);
 		criteria.setProjection(Projections.rowCount());
 		return ((Long) criteria.list().get(0)).longValue();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Person> retreiveAll() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		return session.createCriteria(Person.class).list();
 	}
 
 }
