@@ -10,59 +10,51 @@
 <script src="js/jquery.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script>
-	$(document)
-			.ready(
-					function() {
-						$.post("search-Person_search.action", {
+	$(document).ready(
+			function() {
+				$.post("search-Person_search.action", {
 
-						}, function(data, status) {
-							var people = $.parseJSON(data).list;
-							console.log(people);
-							for (var i = 0; i < people.length; i++) {
-								var person = people[i];
-								genRow(person);
-							}
-						});
+				}, function(data, status) {
+					var people = $.parseJSON(data).list;
+					console.log(people);
+					for (var i = 0; i < people.length; i++) {
+						var person = people[i];
+						genRow(person);
+					}
+				});
 
-						function genRow(person) {
-							console.log(person);
-							$("#peopleTable tbody")
-									.append(
-											"<tr>"
-													+ '<td><a href="display-Person_open.action?id='
-													+ person.id
-													+ '" style="text-decoration:none;">'
-													+ person.firstName
-													+ "</td>" + "<td>"
-													+ person.surname + "</td>"
-													+ "<td>"
-													+ person.creationTime
-													+ "</td>" + "</tr>");
-							addStyle();
-						}
+				function genRow(person) {
+					console.log(person);
+					$("#peopleTable tbody").append(
+							'<tr id="personRow_' + person.id + '">' + '<td>'
+									+ person.firstName + "</td>" + "<td>"
+									+ person.surname + "</td>" + "<td>"
+									+ person.creationTime + "</td>" + "</tr>");
+					addStyle();
+				}
 
-						function addStyle() {
-							$("tbody tr").hover(function() {
-								$(this).addClass("ui-state-hover");
-							}, function() {
-								$(this).removeClass("ui-state-hover");
-							});
-							$("tbody tr").click(
-									function() {
-										window.location.href = $(this)
-												.find("a").attr("href");
-									});
-						}
-						$("#inputPerson").dialog({
-							autoOpen : false
-						});
-						$("#addNew").button();
-
-						$("#addNew").click(function() {
-							$('#inputPerson').dialog('open');
-							return false;
-						});
+				function addStyle() {
+					$("tbody tr").hover(function() {
+						$(this).addClass("ui-state-hover");
+					}, function() {
+						$(this).removeClass("ui-state-hover");
 					});
+					$("tbody tr").click(function() {
+						var personId = $(this).attr('id').split('_')[1];
+						console.log(personId);
+						$('#inputPerson').dialog('open');
+					});
+				}
+				$("#inputPerson").dialog({
+					autoOpen : false
+				});
+				$("#addNew").button();
+
+				$("#addNew").click(function() {
+					$('#inputPerson').dialog('open');
+					return false;
+				});
+			});
 </script>
 </head>
 <body>
@@ -83,6 +75,15 @@
 	</section>
 	<div id="inputPerson" title="Add/Modify Person">
 		<form>
+			<s:textfield label="First name" name="firstName" requiredLabel="true"
+				maxlength="30" />
+			<s:textfield label="Surname" name="surname" requiredLabel="true"
+				maxlength="30" />
+			<s:textfield label="Contact number" name="phone" maxlength="30" />
+			<s:textfield label="Email address" name="email" maxlength="30" />
+			<s:select name="country" list="countryList" listKey="countryId"
+				listValue="countryName" headerKey="0" headerValue="Country"
+				label="Select a country" />
 		</form>
 	</div>
 </body>

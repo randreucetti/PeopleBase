@@ -21,7 +21,7 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public Person getById(int id) {
+	public Person getById(Long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		return (Person) session.get(Person.class, id);
 	}
