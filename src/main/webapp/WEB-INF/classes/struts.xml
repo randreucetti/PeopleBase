@@ -5,17 +5,16 @@
 <struts>
 	<constant name="struts.devMode" value="true" />
 	<package name="default" extends="struts-default">
-
-		<action name="search-Person" class="searchPersonAction">
+		<action name="search-Person" class="personAction">
 			<result name="success">/searchPerson.jsp</result>
 		</action>
-		<action name="search-Person_search" class="searchPersonAction" method="search">
+		<action name="search-Person_search" class="personAction" method="search">
 			<result name="success">/searchPerson.jsp</result>
 		</action>
 
-		<action name="open-Person" class="displayPersonAction" method="open" />
-		<action name="save-Person" class="displayPersonAction" method="save">
-			<result name="input">/searchPerson.jsp</result>
+		<action name="open-Person" class="personAction" method="open" />
+		<action name="save-Person" class="personAction" method="save">
+			<result name="input"></result>
 		</action>
 	</package>
 </struts>

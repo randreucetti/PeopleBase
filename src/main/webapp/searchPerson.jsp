@@ -25,6 +25,13 @@
 <script>
 	$(document).ready(
 			function() {
+				var table = $('#peopleTable').DataTable({
+					"columnDefs" : [ {
+						"targets" : [ 3 ],
+						"visible" : false,
+						"searchable" : false
+					} ]
+				});
 				$.post("search-Person_search.action", {
 
 				}, function(data, status) {
@@ -34,28 +41,42 @@
 						var person = people[i];
 						genRow(person);
 					}
-					$('#peopleTable').DataTable();
 				});
 
 				function genRow(person) {
-					console.log(person);
-					$("#peopleTable tbody").append(
-							'<tr id="personRow_' + person.id + '">' + '<td>'
-									+ person.firstName + "</td>" + "<td>"
-									+ person.surname + "</td>" + "<td>"
-									+ person.creationTime + "</td>" + "</tr>");
+					table.row.add(
+							[ person.firstName, person.surname,
+									person.creationTime, person.id ]).draw();
 				}
 
-				$('#submit').click(function() {
-					$.post("save-Person.action",{
-						firstName : $('#firstName').val(),
-						surname : $('#surname').val(),
-						phone : $('#phone').val(),
-						email : $('#email').val(),
-						country : $('#country').val(),
-						dateOfBirth : $('#dateOfBirth').val()
-					});
-				});
+				$('#submit').click(
+						function() {
+							$("#errorMessagesDiv").html('');
+							$.post("save-Person.action", {
+								firstName : $('#firstName').val(),
+								surname : $('#surname').val(),
+								phone : $('#phone').val(),
+								email : $('#email').val(),
+								country : $('#country').val(),
+								dateOfBirth : $('#dateOfBirth').val()
+							}, function(data, status) {
+								var errorList = $.parseJSON(data).errorList;
+								if (errorList.length > 0) {
+									for (var i = 0; i < errorList.length; i++) {
+										$('#errorMessagesDiv').append(
+												'<span class="red">'
+														+ errorList[i].msg
+														+ '</span>');
+									}
+								} else {
+									var person = $.parseJSON(data).person;
+									genRow(person);
+									$("#displayDialog").dialog('close');
+									clearInput();
+								}
+							});
+							return false;
+						});
 
 				$("#displayDialog").dialog({
 					autoOpen : false,
@@ -72,9 +93,26 @@
 					$("#displayDialog").dialog('open');
 					return false;
 				});
+
+				function clearInput() {
+					$("#firstName").val('');
+					$("#surname").val('');
+					$("#phone").val('');
+					$("#email").val('');
+					$("#country").val('');
+					$("#gender").val('');
+					$("#dateOfBirth").val('');
+				}
 			});
 </script>
 <style>
+.red {
+	color: red;
+	display: block;
+	font-size: 11px;
+	font-style: italic;
+	font-size: 11px;
+}
 </style>
 </head>
 <body>
@@ -96,17 +134,20 @@
 
 
 	<div id="displayDialog" title="Person display">
+		<div id="errorMessagesDiv"></div>
 		<s:form>
-			<s:textfield id="firstName" label="First name" maxlength="30"
-				requiredLabel="true" />
-			<s:textfield id="surname" label="Surname" maxlength="30"
-				requiredLabel="true" />
-			<s:textfield id="phone" label="Phone number" maxlength="30" />
-			<s:textfield id="email" label="Email address" maxlength="40" />
-			<s:textfield id="country" label="Country" />
-			<s:textfield id="gender" label="Gender" />
-			<s:textfield id="dateOfBirth" label="Date of birth"
-				requiredLabel="true" />
+			<s:textfield id="firstName" name="firstName" label="First name"
+				maxlength="30" requiredLabel="true" />
+			<s:textfield id="surname" name="surname" label="Surname"
+				maxlength="30" requiredLabel="true" />
+			<s:textfield id="phone" name="phone" label="Phone number"
+				maxlength="30" />
+			<s:textfield id="email" name="email" label="Email address"
+				maxlength="40" />
+			<s:textfield id="country" name="country" label="Country" />
+			<s:textfield id="gender" name="gender" label="Gender" />
+			<s:textfield id="dateOfBirth" name="dateOfBirth"
+				label="Date of birth" requiredLabel="true" />
 
 			<s:submit id="submit" />
 		</s:form>

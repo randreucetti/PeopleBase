@@ -5,11 +5,8 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean id="personDao" class="com.randreucetti.peoplebase.dao.impl.PersonDaoImpl" />
 
-	<bean id="searchPersonAction" class="com.randreucetti.peoplebase.actions.PersonSearchAction">
+	<bean id="personAction" class="com.randreucetti.peoplebase.actions.PersonAction">
 		<property name="personDao" ref="personDao" />
 	</bean>
 
-	<bean id="displayPersonAction" class="com.randreucetti.peoplebase.actions.DisplayPersonAction">
-		<property name="personDao" ref="personDao" />
-	</bean>
 </beans>

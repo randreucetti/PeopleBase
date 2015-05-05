@@ -3,6 +3,7 @@ package com.randreucetti.peoplebase.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 
@@ -13,7 +14,7 @@ import com.randreucetti.peoplebase.util.HibernateUtil;
 public class PersonDaoImpl implements PersonDao {
 
 	@Override
-	public void save(Person p) {
+	public void save(Person p) throws HibernateException{
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		session.saveOrUpdate(p);
