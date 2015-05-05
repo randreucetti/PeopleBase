@@ -85,4 +85,10 @@ public class Person {
 		this.creationTime = creationTime;
 	}
 
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", firstName=" + firstName + ", surname=" + surname + ", phone=" + phone + ", email=" + email + ", country="
+				+ country + ", gender=" + gender + ", dateOfBirth=" + dateOfBirth + ", creationTime=" + creationTime + "]";
+	}
+
 }

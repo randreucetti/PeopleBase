@@ -12,7 +12,10 @@
 		<action name="search-Person_search" class="searchPersonAction" method="search">
 			<result name="success">/searchPerson.jsp</result>
 		</action>
-		
-		
+
+		<action name="open-Person" class="displayPersonAction" method="open" />
+		<action name="save-Person" class="displayPersonAction" method="save">
+			<result name="input">/searchPerson.jsp</result>
+		</action>
 	</package>
 </struts>

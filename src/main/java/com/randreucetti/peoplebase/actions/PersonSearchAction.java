@@ -38,6 +38,10 @@ public class PersonSearchAction extends ActionBase {
 	public void setPersonDao(PersonDao personDao) {
 		this.personDao = personDao;
 	}
+	
+	public String getFirstName(){
+		return "gfsdgf";
+	}
 
 
 }

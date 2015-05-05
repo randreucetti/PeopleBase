@@ -8,4 +8,8 @@
 	<bean id="searchPersonAction" class="com.randreucetti.peoplebase.actions.PersonSearchAction">
 		<property name="personDao" ref="personDao" />
 	</bean>
+
+	<bean id="displayPersonAction" class="com.randreucetti.peoplebase.actions.DisplayPersonAction">
+		<property name="personDao" ref="personDao" />
+	</bean>
 </beans>
